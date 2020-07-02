@@ -17,12 +17,25 @@ describe('When: Use the search feature', () => {
     expect(items.length).to.be.greaterThan(1, 'At least one book');
   });
 
-  xit('Then: I should see search results as I am typing', async () => {
-    await browser.get('/');
-    await browser.wait(
-      ExpectedConditions.textToBePresentInElement($('tmo-root'), 'okreads')
-    );
+  it('Then: I should see search results as I am typing', async () => {
+  
+    const input = await $('input[type="search"]');
+    await input.clear();
+    await input.sendKeys('java');
+    let items = await $$('[data-testing="book-item"]');
+    expect(items.length).to.be.greaterThan(1, 'At least one book');
+    await input.sendKeys('script');
+    items = await $$('[data-testing="book-item"]');
+    expect(items.length).to.be.greaterThan(1, 'At least one book');
+  });
 
-    // TODO: Implement this test!
+  it('Then: I should see error message if there are no results returned as I am typing', async () => {
+
+    const input = await $('input[type="search"]');
+    await input.clear();
+    await input.sendKeys('addadsda asd adfassd asdasdaq');
+    const items = await $$('[data-testing="book-item"]');
+    expect(items.length).to.be.equal(0, 'No results found');
+
   });
 });
