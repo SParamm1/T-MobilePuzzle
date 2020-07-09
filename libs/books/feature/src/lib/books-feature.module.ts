@@ -11,6 +11,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TotalCountComponent } from './total-count/total-count.component';
 import { ReadingListComponent } from './reading-list/reading-list.component';
+import { CheckFinishedPipe } from './check-finished.pipe';
 
 const EXPORTS = [
   BookSearchComponent,
@@ -34,6 +35,6 @@ const EXPORTS = [
     BooksDataAccessModule
   ],
   exports: [...EXPORTS],
-  declarations: [...EXPORTS]
+  declarations: [...EXPORTS, CheckFinishedPipe]
 })
 export class BooksFeatureModule {}
