@@ -17,6 +17,7 @@ describe('When: I use the reading list feature', () => {
         'My Reading List'
       )
     );
+    await $('.reading-list-container h2 button').click(); 
   });
 
   it('Then: I am able to mark a book in the reading list as finished',async () =>{
@@ -27,6 +28,9 @@ describe('When: I use the reading list feature', () => {
     await form.submit();
     
     const items = await $$('[data-testing="book-item"]');
+    await $$('.book--content--info div button:enabled')
+      .first()
+      .click();
     const readingListToggle = await $('[data-testing="toggle-reading-list"]');
     await readingListToggle.click();
   
