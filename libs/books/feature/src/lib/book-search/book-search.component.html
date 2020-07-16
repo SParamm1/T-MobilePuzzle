@@ -41,7 +41,7 @@
                 (click)="addBookToReadingList(b)"
                 [disabled]="b.isAdded"
               >
-                Want to Read
+              {{ b.id | checkFinished:finishedBookIds}}
               </button>
             </div>
           </div>

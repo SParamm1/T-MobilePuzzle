@@ -4,7 +4,8 @@ import { fetch, optimisticUpdate } from '@nrwl/angular';
 import * as ReadingListActions from './reading-list.actions';
 import { HttpClient } from '@angular/common/http';
 import { ReadingListItem } from '@tmo/shared/models';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class ReadingListEffects implements OnInitEffects {
@@ -57,12 +58,8 @@ export class ReadingListEffects implements OnInitEffects {
       optimisticUpdate({
         run: ({ item }) => {
           return this.http.delete(`/api/reading-list/${item.bookId}`).pipe(
-            map(() =>
-              ReadingListActions.confirmedRemoveFromReadingList({
-                item
-              })
+            switchMap(() => of<any>())
             )
-          );
         },
         undoAction: ({ item }) => {
           return ReadingListActions.failedRemoveFromReadingList({
@@ -72,6 +69,28 @@ export class ReadingListEffects implements OnInitEffects {
       })
     )
   );
+
+  markBookAsRead$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(ReadingListActions.markBookAsRead),
+    optimisticUpdate({
+      run: ({ item, finishedDate }) => {
+        return this.http
+        .put('/api/reading-list/${item.bookid}/finished', {
+          finishedDate : finishedDate
+        })
+        .pipe(
+         switchMap(() => of<any>())
+         )
+      },
+      undoAction: ({ item }) => {
+        return ReadingListActions.failedMarkBookAsRead({ 
+          item 
+         });
+      }
+    })
+  )
+);
 
   ngrxOnInitEffects() {
     return ReadingListActions.loadReadingList();

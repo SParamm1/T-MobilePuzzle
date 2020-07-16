@@ -22,8 +22,7 @@
 }
 
 .reading-list-item--cover {
-  max-width: 36px;
-  max-height: 36px;
+  max-width: 46px;
   margin-right: $spacing-xxs;
 }
 
@@ -34,7 +33,8 @@
 }
 
 .reading-list-item--details--title,
-.reading-list-item--details--author {
+.reading-list-item--details--author,
+.reading-list-item--details--finished {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -45,3 +45,13 @@
   font-size: 1rem;
   color: $gray60;
 }
+
+.reading-list-item--details--author.finishedon {
+  font-size: 0.8rem;
+  color:#0cf51e;
+} 
+
+.reading-list-item--details--finished-color {
+color:$pink-accent;
+cursor: pointer;
+} 
